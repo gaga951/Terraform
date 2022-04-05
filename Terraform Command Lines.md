@@ -26,34 +26,34 @@ $ terraform init -get-plugins=false
 ## initialize directory, do not verify plugins for Hashicorp signature
 $ terraform init -verify-plugins=false 
 
+## Plan, Deploy and Cleanup Infrastructure
 
-# Plan, Deploy and Cleanup Infrastructure
-
-# apply changes without being prompted to enter “yes”
+## apply changes without being prompted to enter “yes”
 terraform apply --auto-approve 
 
-terraform destroy --auto-approve ## destroy/cleanup deployment without being prompted for “yes”
+## destroy/cleanup deployment without being prompted for “yes”
+terraform destroy --auto-approve
 
+## output the deployment plan to plan.out
+terraform plan -out plan.out
 
-terraform plan -out plan.out ## output the deployment plan to plan.out
+## use the plan.out plan file to deploy infrastructure
+terraform apply plan.out
 
+## outputs a destroy plan
+terraform plan -destroy
 
-terraform apply plan.out ## use the plan.out plan file to deploy infrastructure
+## only apply/deploy changes to the targeted resource
+terraform apply -target=aws_instance.my_ec2
 
+## pass a variable via command-line while applying a configuration
+terraform apply -var my_region_variable=us-east-1
 
-terraform plan -destroy ## outputs a destroy plan
+## lock the state file so it can’t be modified by any other Terraform apply or modification action(possible only where backend allows locking)
+terraform apply -lock=true
 
-
-terraform apply -target=aws_instance.my_ec2 ## only apply/deploy changes to the targeted resource
-
-
-terraform apply -var my_region_variable=us-east-1 ## pass a variable via command-line while applying a configuration
-
-
-terraform apply -lock=true ## lock the state file so it can’t be modified by any other Terraform apply or modification action(possible only where backend allows locking)
-
-
-terraform apply refresh=false ## do not reconcile state file with real-world resources(helpful with large complex deployments for saving deployment time)
+## do not reconcile state file with real-world resources(helpful with large complex deployments for saving deployment time)
+terraform apply refresh=false
 
 ## number of simultaneous resource operations
 terraform apply --parallelism=5 
