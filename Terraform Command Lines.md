@@ -65,47 +65,94 @@ terraform refresh
 terraform providers 
 
 
-Terraform Workspaces
+# Terraform Workspaces
 
-terraform workspace new mynewworkspace #create a new workspace
-terraform workspace select default #change to the selected workspace
-terraform workspace list #list out all workspaces
-Terraform State Manipulation
+## create a new workspace
+terraform workspace new mynewworkspace 
 
-terraform state show aws_instance.my_ec2 #show details stored in Terraform state for the resource
-terraform state pull > terraform.tfstate #download and output terraform state to a file
-terraform state mv aws_iam_role.my_ssm_role module.custom_module #move a resource tracked via state to different module
-terraform state replace-provider hashicorp/aws registry.custom.com/aws #replace an existing provider with another
-terraform state list #list out all the resources tracked via the current state file
-terraform state rm  aws_instance.myinstace #unmanage a resource, delete it from Terraform state file
+## change to the selected workspace
+terraform workspace select default 
 
-Terraform Import And Outputs
+## list out all workspaces
+terraform workspace list 
 
-terraform import aws_instance.new_ec2_instance i-abcd1234 #import EC2 instance with id i-abcd1234 into the Terraform resource named “new_ec2_instance” of type “aws_instance”
-terraform import 'aws_instance.new_ec2_instance[0]' i-abcd1234 #same as above, imports a real-world resource into an instance of Terraform resource
-terraform output #list all outputs as stated in code
-terraform output instance_public_ip # list out a specific declared output
-terraform output -json #list all outputs in JSON format
-Terraform Miscelleneous commands
+#Terraform State Manipulation
 
-terraform version #display Terraform binary version, also warns if version is old
-terraform get -update=true #download and update modules in the “root” module.
+## show details stored in Terraform state for the resource
+terraform state show aws_instance.my_ec2 
 
-Terraform Console(Test out Terraform interpolations)
+## download and output terraform state to a file
+terraform state pull > terraform.tfstate 
 
-echo 'join(",",["foo","bar"])' | terraform console #echo an expression into terraform console and see its expected result as output
-echo '1 + 5' | terraform console #Terraform console also has an interactive CLI just enter “terraform console”
-echo "aws_instance.my_ec2.public_ip" | terraform console #display the Public IP against the “my_ec2” Terraform resource as seen in the Terraform state file
-Terraform Graph(Dependency Graphing)
+## move a resource tracked via state to different module
+terraform state mv aws_iam_role.my_ssm_role module.custom_module 
 
-terraform graph | dot -Tpng > graph.png #produce a PNG diagrams showing relationship and dependencies between Terraform resource in your configuration/code
+## replace an existing provider with another
+terraform state replace-provider hashicorp/aws registry.custom.com/aws 
 
-Terraform Taint/Untaint(mark/unmark resource for recreation -> delete and then recreate)
+## list out all the resources tracked via the current state file
+terraform state list 
 
-terraform taint aws_instance.my_ec2 #taints resource to be recreated on next apply
-terraform untaint aws_instance.my_ec2 #Remove taint from a resource
-terraform force-unlock LOCK_ID #forcefully unlock a locked state file, LOCK_ID provided when locking the State file beforehand
-Terraform Cloud
+## unmanage a resource, delete it from Terraform state file
+terraform state rm  aws_instance.myinstace 
 
-terraform login #obtain and save API token for Terraform cloud
-terraform logout #Log out of Terraform Cloud, defaults to hostname app.terraform.io
+# Terraform Import And Outputs
+
+## import EC2 instance with id i-abcd1234 into the Terraform resource named “new_ec2_instance” of type “aws_instance”
+terraform import aws_instance.new_ec2_instance i-abcd1234 
+
+## same as above, imports a real-world resource into an instance of Terraform resource
+terraform import 'aws_instance.new_ec2_instance[0]' i-abcd1234 
+
+## list all outputs as stated in code
+terraform output 
+
+## list out a specific declared output
+terraform output instance_public_ip 
+
+## list all outputs in JSON format
+terraform output -json 
+
+# Terraform Miscelleneous commands
+
+## display Terraform binary version, also warns if version is old
+terraform version 
+
+## download and update modules in the “root” module.
+terraform get -update=true 
+
+# Terraform Console(Test out Terraform interpolations)
+
+
+## echo an expression into terraform console and see its expected result as output
+echo 'join(",",["foo","bar"])' | terraform console 
+
+## Terraform console also has an interactive CLI just enter “terraform console”
+echo '1 + 5' | terraform console 
+
+## display the Public IP against the “my_ec2” Terraform resource as seen in the Terraform state file
+echo "aws_instance.my_ec2.public_ip" | terraform console 
+
+# Terraform Graph(Dependency Graphing)
+
+## produce a PNG diagrams showing relationship and dependencies between Terraform resource in your configuration/code
+terraform graph | dot -Tpng > graph.png 
+
+# Terraform Taint/Untaint(mark/unmark resource for recreation -> delete and then recreate)
+
+## taints resource to be recreated on next apply
+terraform taint aws_instance.my_ec2 
+
+## Remove taint from a resource
+terraform untaint aws_instance.my_ec2 
+
+## forcefully unlock a locked state file, LOCK_ID provided when locking the State file beforehand
+terraform force-unlock LOCK_ID 
+
+# Terraform Cloud
+
+## obtain and save API token for Terraform cloud
+terraform login 
+
+## Log out of Terraform Cloud, defaults to hostname app.terraform.io
+terraform logout 
