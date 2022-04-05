@@ -1,0 +1,68 @@
+# Terraform CLI tricks
+
+## Setup tab auto-completion, requires logging back in
+$ terraform -install-autocomplete 
+
+
+# Format and Validate Terraform code
+
+## format code per HCL canonical standard
+$ terraform fmt 
+
+## validate code for syntax
+$ terraform validate 
+
+## validate code skip backend validation
+$ terraform validate -backend=false 
+
+# Initialize your Terraform working directory
+
+## initialize directory, pull down providers
+$ terraform init 
+
+## initialize directory, do not download plugins
+$ terraform init -get-plugins=false 
+
+## initialize directory, do not verify plugins for Hashicorp signature
+$ terraform init -verify-plugins=false 
+
+
+# Plan, Deploy and Cleanup Infrastructure
+
+# apply changes without being prompted to enter “yes”
+terraform apply --auto-approve 
+
+terraform destroy --auto-approve ## destroy/cleanup deployment without being prompted for “yes”
+
+
+terraform plan -out plan.out ## output the deployment plan to plan.out
+
+
+terraform apply plan.out ## use the plan.out plan file to deploy infrastructure
+
+
+terraform plan -destroy ## outputs a destroy plan
+
+
+terraform apply -target=aws_instance.my_ec2 ## only apply/deploy changes to the targeted resource
+
+
+terraform apply -var my_region_variable=us-east-1 ## pass a variable via command-line while applying a configuration
+
+
+terraform apply -lock=true ## lock the state file so it can’t be modified by any other Terraform apply or modification action(possible only where backend allows locking)
+
+
+terraform apply refresh=false ## do not reconcile state file with real-world resources(helpful with large complex deployments for saving deployment time)
+
+## number of simultaneous resource operations
+terraform apply --parallelism=5 
+
+## reconcile the state in Terraform state file with real-world resources
+terraform refresh
+
+## get information about providers used in current configuration
+terraform providers 
+
+
+
