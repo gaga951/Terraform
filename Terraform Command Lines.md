@@ -63,6 +63,9 @@ $ terraform refresh
 ### get information about providers used in current configuration
 $ terraform providers 
 
+### command is used to provide human-readable output from a state or plan file
+
+$ terraform show 
 
 ## Terraform Workspaces
 
@@ -155,3 +158,11 @@ $ terraform login
 
 ### Log out of Terraform Cloud, defaults to hostname app.terraform.io
 $ terraform logout 
+
+
+
+
+
+
+
+
