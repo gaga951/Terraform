@@ -25,6 +25,14 @@ $ terraform init -get-plugins=false
 ### initialize directory, do not verify plugins for Hashicorp signature
 $ terraform init -verify-plugins=false 
 
+### To skip backend initialization, When you are doing initialization with terraform init
+
+$ terraform init -backend=false
+
+### To skip child module installation When you are doing initialization
+
+$ terraform init -get=false
+
 ### Plan, Deploy and Cleanup Infrastructure
 
 ### apply changes without being prompted to enter “yes”
@@ -78,6 +86,14 @@ $ terraform workspace select default
 ### list out all workspaces
 $ terraform workspace list 
 
+### the command to show the current workspace?
+
+$ terraform workspace show
+
+### The command to switch the workspace?
+
+$ terraform workspace select <workspace name>
+
 ## Terraform State Manipulation
 
 ### show details stored in Terraform state for the resource
@@ -94,6 +110,10 @@ $ terraform state replace-provider hashicorp/aws registry.custom.com/aws
 
 ### list out all the resources tracked via the current state file
 $ terraform state list 
+  
+### list the resources for the given name?
+
+$ terraform state list <resource name>
 
 ### unmanage a resource, delete it from Terraform state file
 $ terraform state rm  aws_instance.myinstace 
@@ -143,6 +163,8 @@ $ terraform graph | dot -Tpng > graph.png
 ## Terraform Taint/Untaint(mark/unmark resource for recreation -> delete and then recreate)
 
 ### taints resource to be recreated on next apply
+This command will not modify infrastructure, but does modify the state file in order to mark a resource as tainted. Once a resource is marked as tainted, the next plan will show that the resource will be destroyed and recreated and the next apply will implement this change.
+
 $ terraform taint aws_instance.my_ec2 
 
 ### Remove taint from a resource
@@ -159,9 +181,9 @@ $ terraform login
 ### Log out of Terraform Cloud, defaults to hostname app.terraform.io
 $ terraform logout 
 
+### Provider plugins naming scheme
 
-
-
+$ terraform-provider-<NAME>_vX.Y.Z
 
 
 
